@@ -1,6 +1,15 @@
-<?php
-include("config.php");
-session_start();
+<?php 
+$hostname = "localhost";
+$username = "dachi";
+$password = "trakshipalo";
+$database = "dachi";
+
+$con = mysql_connect($hostname, $username, $password) or die("OKI");
+mysql_select_db($database, $con) or die("error2");
+
+
+
+
 if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 	$myusername=addslashes($_POST['username']);
@@ -13,8 +22,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 		$count=mysql_num_rows($result);
 		if($count == 1) {
 	
-		session_register("myusername");
-		$_SESSION['login_user']=$myusername;
+		 session_start();
+                 $_SESSION['loggedin'] = true;
+                 $_SESSION['username'] = $myusername;
+
 
 		header("location: welcome.php");
 		}
@@ -26,11 +37,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 ?>
 <html>
-<form action="" method="post">
-<label>UserName :</label>
-<input type="text" name="username"/><br />
-<label>Password :</label>
-<input type="password" name="password"/><br/>
-<input type="submit" value=" Submit "/><br />
-</form>
+<body background="images/bg.jpg">
+  <form action="" method="post" >
+    <label>UserName :</label>
+      <input type="text" name="username"/><br />
+    <label>Password :</label>
+      <input type="password" name="password"/><br/>
+      <input type="submit" value=" Submit "/><br />
+  </form>
+</body>
 </html>
